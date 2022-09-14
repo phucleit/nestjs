@@ -16,7 +16,11 @@ export class HostingsService {
   }
 
   async findAll(_page: any) {
-    var model = await new MongooseHelper(this.model).sort('createdAt', -1).paging(_page, 10).excute();
+    var model = await new MongooseHelper(this.model)
+      .lookup('websites', 'Website')
+      .sort('createdAt', -1)
+      .paging(_page, 10)
+      .excute();
     return model;
   }
 
@@ -27,7 +31,9 @@ export class HostingsService {
 
   async update(id: string, updateHostingDto: UpdateHostingDto) {
     const model = await this.model
-      .findByIdAndUpdate(id, updateHostingDto, { new: true });
+      .findByIdAndUpdate(id, updateHostingDto)
+      .setOptions({ new: true });
+      
     if (!model) {
       throw new NotFoundException();
     }

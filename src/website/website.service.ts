@@ -30,7 +30,9 @@ export class WebsiteService {
 
   async update(id: string, updateWebsiteDto: UpdateWebsiteDto) {
     const model = await this.model
-      .findByIdAndUpdate(id, updateWebsiteDto, { new: true });
+      .findByIdAndUpdate(id, updateWebsiteDto)
+      .setOptions({ new: true });
+
     if (!model) {
       throw new NotFoundException();
     }

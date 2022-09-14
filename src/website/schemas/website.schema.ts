@@ -15,7 +15,7 @@ export class Website {
     @Prop({type: String, required: true})
     price: String;
 
-    @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Hostings', autopopulate: true})
+    @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Hostings', autopopulate: {select: 'name'}})
     hosting:  MongooseSchema.Types.ObjectId
 
 }

@@ -32,6 +32,9 @@ export class Hostings {
     
     @Prop({type: String})
     database: String;
+
+    @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'Website', autopopulate: true })
+    websites: MongooseSchema.Types.ObjectId[]
 }
 
 export const HostingsSchema = SchemaFactory.createForClass(Hostings);
