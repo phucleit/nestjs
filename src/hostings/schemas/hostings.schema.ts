@@ -11,6 +11,27 @@ export enum HostingsStatus {
 export class Hostings {
     @Prop({type: String, required: true})
     name: String;
+
+    @Prop({type: String})
+    price: String;
+
+    @Prop({type: String})
+    capacity: String;
+
+    @Prop({type: String})
+    bandwidth: String;
+
+    @Prop({type: String})
+    subdomain: String;
+
+    @Prop({type: String})
+    email: String;
+
+    @Prop({type: String})
+    ftp: String;
+    
+    @Prop({type: String})
+    database: String;
 }
 
 export const HostingsSchema = SchemaFactory.createForClass(Hostings);

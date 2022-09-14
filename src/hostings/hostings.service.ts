@@ -27,8 +27,7 @@ export class HostingsService {
 
   async update(id: string, updateHostingDto: UpdateHostingDto) {
     const model = await this.model
-      .findByIdAndUpdate(id, updateHostingDto)
-      .setOptions({ overwrite: true, new: true });
+      .findByIdAndUpdate(id, updateHostingDto, { new: true });
     if (!model) {
       throw new NotFoundException();
     }

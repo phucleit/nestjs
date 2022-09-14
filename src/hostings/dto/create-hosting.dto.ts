@@ -15,4 +15,12 @@ export class CreateHostingDto {
         message: '$value already exists. Choose another name.'
     })
     name: String;
+
+    price: String;
+    capacity: String;
+    bandwidth: String;
+    subdomain: String;
+    email: String;
+    ftp: String;
+    database: String;
 }
