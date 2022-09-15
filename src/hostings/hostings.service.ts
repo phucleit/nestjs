@@ -4,14 +4,14 @@ import { Model, Types } from 'mongoose';
 import { CreateHostingDto } from './dto/create-hosting.dto';
 import { UpdateHostingDto } from './dto/update-hosting.dto';
 import { Hostings, HostingsDocument } from './schemas/hostings.schema';
-import { Website, WebsiteDocument } from '../website/schemas/website.schema';
 import { MongooseHelper} from 'src/common/MongooseHelper'
+import { WebsiteService } from 'src/website/website.service';
 
 @Injectable()
 export class HostingsService {
   constructor(
     @InjectModel(Hostings.name) public model: Model<HostingsDocument>,
-    @InjectModel(Website.name) public modelWebsite: Model<WebsiteDocument>
+    public websiteService: WebsiteService
   ) {};
 
   async create(createHostingDto: CreateHostingDto) {
@@ -20,6 +20,7 @@ export class HostingsService {
   }
 
   async findAll(_page: any) {
+    console.log(await this.websiteService.findAll(1))
     var model = await new MongooseHelper(this.model)
       .sort('createdAt', -1)
       .paging(_page, 10)
@@ -28,24 +29,8 @@ export class HostingsService {
   }
 
   async findOne(id: string) {
-    return await this.model.findOne({ _id: id }).populate('website', '', this.modelWebsite).exec();
-
-    // var model = await new MongooseHelper(this.model)
-      // .query({
-      //   $set: {
-      //     websites: [
-      //       new Types.ObjectId(id)
-      //     ]
-      //   }
-      // })
-    //   .excute();
-    // return model;
-
-    // var model = await new MongooseHelper(this.model).byID(id);
-    // return model;
-
-    // var model = await this.model.findById(id).populate('websites').exec();
-    // return model;
+    var model = await new MongooseHelper(this.model).byID(id);
+    return model;
   }
 
   async update(id: string, updateHostingDto: UpdateHostingDto) {
