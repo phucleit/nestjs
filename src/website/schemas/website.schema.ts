@@ -15,9 +15,8 @@ export class Website {
     @Prop({type: String, required: true})
     price: String;
 
-    @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Hostings', autopopulate: {select: 'name'}})
+    @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Hostings', required: false,  autopopulate: true })
     hosting:  MongooseSchema.Types.ObjectId
-
 }
 
 export const WebsiteSchema = SchemaFactory.createForClass(Website);

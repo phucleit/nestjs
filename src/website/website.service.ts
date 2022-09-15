@@ -18,7 +18,7 @@ export class WebsiteService {
 
   async findAll(_page: any) {
     var model = await new MongooseHelper(this.model)
-      .lookup('hosting', "hostings")
+      // .lookup('hosting', "hostings")
       .sort('createdAt', -1).paging(_page, 5).excute();
     return model;
   }

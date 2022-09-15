@@ -33,7 +33,7 @@ export class Hostings {
     @Prop({type: String})
     database: String;
 
-    @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'Website', autopopulate: true })
+    @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'Website', required: false,  autopopulate: {select: 'name'} })
     websites: MongooseSchema.Types.ObjectId[]
 }
 
