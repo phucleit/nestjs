@@ -31,4 +31,13 @@ export class WebsiteController {
   remove(@Param('id') id: string) {
     return this.websiteService.remove(id);
   }
+
+  @Patch("changeHostName/:id")
+  changeHostName(@Param("id") id : string, @Body() updateWebsiteDto: Object){
+    return this.websiteService.changeHostName(id, updateWebsiteDto['hosting'])
+  }
+  // @Get('hosting/:id')
+  // findWebsiteByHostingId(@Param('id') id: string) {
+  //   return this.websiteService.findWebsiteByHostingId(id);
+  // }
 }

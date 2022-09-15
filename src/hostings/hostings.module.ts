@@ -4,7 +4,7 @@ import { HostingsService } from './hostings.service';
 import { HostingsController } from './hostings.controller';
 import { Hostings, HostingsSchema } from './schemas/hostings.schema';
 import { IsHostingsAlreadyExistConstraint } from './schemas/hostings.validate';
-import { WebsiteModule } from 'src/website/website.module';
+// import { WebsiteModule } from 'src/website/website.module';
 var slugify = require('vietnamese-slug')
 
 @Module({
@@ -24,7 +24,7 @@ var slugify = require('vietnamese-slug')
       }
     ]
     ),
-    WebsiteModule
+    // WebsiteModule
   ],
   controllers: [HostingsController],
   providers: [IsHostingsAlreadyExistConstraint, HostingsService],

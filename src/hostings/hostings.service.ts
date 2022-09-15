@@ -5,13 +5,13 @@ import { CreateHostingDto } from './dto/create-hosting.dto';
 import { UpdateHostingDto } from './dto/update-hosting.dto';
 import { Hostings, HostingsDocument } from './schemas/hostings.schema';
 import { MongooseHelper} from 'src/common/MongooseHelper'
-import { WebsiteService } from 'src/website/website.service';
+//import { WebsiteService } from 'src/website/website.service';
 
 @Injectable()
 export class HostingsService {
   constructor(
     @InjectModel(Hostings.name) public model: Model<HostingsDocument>,
-    public websiteService: WebsiteService
+    //public websiteService: WebsiteService
   ) {};
 
   async create(createHostingDto: CreateHostingDto) {
@@ -20,8 +20,15 @@ export class HostingsService {
   }
 
   async findAll(_page: any) {
-    console.log(await this.websiteService.findAll(1))
     var model = await new MongooseHelper(this.model)
+      .query({
+        $lookup: {
+          from: "websites",
+          localField: "_id",
+          foreignField: "hosting",
+          as: 'websites'
+        }
+      })
       .sort('createdAt', -1)
       .paging(_page, 10)
       .excute();
