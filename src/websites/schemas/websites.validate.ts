@@ -6,27 +6,27 @@ import {
     ValidationArguments,
   } from 'class-validator';
 import { Injectable } from '@nestjs/common';
-import { WebsiteService } from '../website.service';
+import { WebsitesService } from '../websites.service';
 
   @ValidatorConstraint({ async: true })
   @Injectable()
-  export class IsWebsiteAlreadyExistConstraint implements ValidatorConstraintInterface {
-    constructor(private website: WebsiteService) {}
+  export class IsWebsitesAlreadyExistConstraint implements ValidatorConstraintInterface {
+    constructor(private websites: WebsitesService) {}
 
     async validate(str: any, args: ValidationArguments,) {
-        var model = await this.website.findByName(str);
+        var model = await this.websites.findByName(str);
         if(model == null) return true;
         return false;
     }
   }
-  export function IsWebsiteAlreadyExist(validationOptions?: ValidationOptions) {
+  export function IsWebsitesAlreadyExist(validationOptions?: ValidationOptions) {
     return function (object: Object, propertyName: string) {
       registerDecorator({
         target: object.constructor,
         propertyName: propertyName,
         options: validationOptions,
         constraints: [],
-        validator: IsWebsiteAlreadyExistConstraint,
+        validator: IsWebsitesAlreadyExistConstraint,
       });
     };
   }

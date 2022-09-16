@@ -3,12 +3,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateWebsiteDto } from './dto/create-website.dto';
 import { UpdateWebsiteDto } from './dto/update-website.dto';
-import { Website, WebsiteDocument } from './schemas/website.schema';
+import { Websites, WebsitesDocument } from './schemas/websites.schema';
 import { MongooseHelper} from 'src/common/MongooseHelper'
 
 @Injectable()
-export class WebsiteService {
-  constructor(@InjectModel(Website.name) public model: Model<WebsiteDocument>) {};
+export class WebsitesService {
+  constructor(@InjectModel(Websites.name) public model: Model<WebsitesDocument>) {};
 
   async create(createWebsiteDto: CreateWebsiteDto) {
     const model = new this.model(createWebsiteDto);

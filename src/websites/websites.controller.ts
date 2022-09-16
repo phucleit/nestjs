@@ -1,43 +1,43 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
-import { WebsiteService } from './website.service';
+import { WebsitesService } from './websites.service';
 import { CreateWebsiteDto } from './dto/create-website.dto';
 import { UpdateWebsiteDto } from './dto/update-website.dto';
 
-@Controller('website')
-export class WebsiteController {
-  constructor(private readonly websiteService: WebsiteService) {}
+@Controller('websites')
+export class WebsitesController {
+  constructor(private readonly websitesService: WebsitesService) {}
 
   @Post()
   create(@Body() createWebsiteDto: CreateWebsiteDto) {
-    return this.websiteService.create(createWebsiteDto);
+    return this.websitesService.create(createWebsiteDto);
   }
 
   @Get()
   findAll(@Query() query) {
-    return this.websiteService.findAll(query.page);
+    return this.websitesService.findAll(query.page);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.websiteService.findOne(id);
+    return this.websitesService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateWebsiteDto: UpdateWebsiteDto) {
-    return this.websiteService.update(id, updateWebsiteDto);
+    return this.websitesService.update(id, updateWebsiteDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.websiteService.remove(id);
+    return this.websitesService.remove(id);
   }
 
   @Patch("changeHostName/:id")
   changeHostName(@Param("id") id : string, @Body() updateWebsiteDto: Object){
-    return this.websiteService.changeHostName(id, updateWebsiteDto['hosting'])
+    return this.websitesService.changeHostName(id, updateWebsiteDto['hosting'])
   }
   // @Get('hosting/:id')
   // findWebsiteByHostingId(@Param('id') id: string) {
-  //   return this.websiteService.findWebsiteByHostingId(id);
+  //   return this.websitesService.findWebsiteByHostingId(id);
   // }
 }

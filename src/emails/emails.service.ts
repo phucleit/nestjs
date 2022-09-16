@@ -1,35 +1,32 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { CreateHostingDto } from './dto/create-hosting.dto';
-import { UpdateHostingDto } from './dto/update-hosting.dto';
-import { Hostings, HostingsDocument } from './schemas/hostings.schema';
-import { MongooseHelper} from 'src/common/MongooseHelper'
+import { CreateEmailDto } from './dto/create-email.dto';
+import { UpdateEmailDto } from './dto/update-email.dto';
+import { Emails, EmailsDocument } from './schemas/emails.schema';
+import { MongooseHelper} from 'src/common/MongooseHelper';
 
 @Injectable()
-export class HostingsService {
+export class EmailsService {
   constructor(
-    @InjectModel(Hostings.name) public model: Model<HostingsDocument>
+    @InjectModel(Emails.name) public model: Model<EmailsDocument>
   ) {};
 
-  async create(createHostingDto: CreateHostingDto) {
-    const model = new this.model(createHostingDto);
-    return await model.save();
+  async create(createEmailDto: CreateEmailDto) {
+    try {
+      const model = new this.model(createEmailDto);
+      return await model.save();
+    } catch {
+      return null;
+    }
   }
 
   async findAll(_page: any) {
     var model = await new MongooseHelper(this.model)
-      .query({
-        $lookup: {
-          from: "websites",
-          localField: "_id",
-          foreignField: "hosting",
-          as: 'websites'
-        }
-      })
       .sort('createdAt', -1)
       .paging(_page, 10)
       .excute();
+    
     return model;
   }
 
@@ -38,11 +35,11 @@ export class HostingsService {
     return model;
   }
 
-  async update(id: string, updateHostingDto: UpdateHostingDto) {
+  async update(id: string, updateEmailDto: UpdateEmailDto) {
     const model = await this.model
-      .findByIdAndUpdate(id, updateHostingDto)
+      .findByIdAndUpdate(id, updateEmailDto)
       .setOptions({ new: true });
-      
+
     if (!model) {
       throw new NotFoundException();
     }
@@ -50,7 +47,7 @@ export class HostingsService {
   }
 
   async remove(id: string) {
-    const model = await this.model.findByIdAndDelete(id);
+    var model = await this.model.findByIdAndDelete(id);
     if (!model) {
       throw new NotFoundException();
     }

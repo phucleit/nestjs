@@ -1,5 +1,5 @@
-import { IsNotEmpty, MinLength, MaxLength } from 'class-validator';
-import { IsWebsiteAlreadyExist } from '../schemas/website.validate';
+import { IsNotEmpty, MinLength, MaxLength, IsNumber, IsPositive } from 'class-validator';
+import { IsWebsitesAlreadyExist } from '../schemas/websites.validate';
 import { ObjectId } from 'mongoose';
 
 export class CreateWebsiteDto {
@@ -12,11 +12,19 @@ export class CreateWebsiteDto {
     @MaxLength(20, {
         message: 'Name is too long, maxinimal length is $constraint1 characters, but actual is $value',
     })
-    @IsWebsiteAlreadyExist({
+    @IsWebsitesAlreadyExist({
         message: '$value already exists. Choose another name.'
     })
     name: String;
 
-    price: String;
+    @IsPositive({
+        message: 'Price is a positive number greater than zero'
+    })
+    @IsNotEmpty({
+        message: 'Price should not be empty'
+    })
+    @IsNumber()
+    price: Number;
+
     hosting: ObjectId;
 }
